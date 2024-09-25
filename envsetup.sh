@@ -48,6 +48,11 @@ if [ ! "$T" ]; then
 fi
 IMPORTING_ENVSETUP=true source $T/build/make/shell_utils.sh
 
+EOF
+
+    __print_cipher_functions_help
+
+cat <<EOF
 
 
 
