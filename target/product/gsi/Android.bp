@@ -134,7 +134,6 @@ android_filesystem_defaults {
         "Dialer",
         "LatinIME",
         "messaging",
-        "apns-full-conf.xml",
         "frameworks-base-overlays",
     ],
     multilib: {
