@@ -7082,11 +7082,12 @@ PATH=$(INTERNAL_USERIMAGES_BINARY_PATHS):$(dir $(ZIP2ZIP)):$$PATH \
         $(patsubst %.zip,%,$(BUILT_TARGET_FILES_PACKAGE)) $(1)
 endef
 
-product_name := $(TARGET_PRODUCT)
+product_name := $(subst cipher_,,$(TARGET_PRODUCT))
+CUSTOM_BUILD_DATE := $(shell date -u +%Y%m%d)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   product_name := $(product_name)_debug
 endif
-name := $(product_name)-ota
+name := CipherOS-W-$(product_name)-OTA-$(CUSTOM_BUILD_DATE)-$(TARGET_BUILD_VARIANT)
 
 INTERNAL_OTA_PACKAGE_TARGET := $(PRODUCT_OUT)/$(name).zip
 INTERNAL_OTA_METADATA := $(PRODUCT_OUT)/ota_metadata
@@ -7106,7 +7107,7 @@ $(call declare-container-license-deps,$(INTERNAL_OTA_PACKAGE_TARGET),$(BUILT_TAR
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
 
 ifeq ($(BOARD_BUILD_RETROFIT_DYNAMIC_PARTITIONS_OTA_PACKAGE),true)
-name := $(product_name)-ota-retrofit
+name := CipherOS-W-$(PLATFORM_VERSION)-$(product_name)-retrofit-ota-$(CUSTOM_BUILD_DATE)-$(TARGET_BUILD_VARIANT)
 
 INTERNAL_OTA_RETROFIT_DYNAMIC_PARTITIONS_PACKAGE_TARGET := $(PRODUCT_OUT)/$(name).zip
 $(INTERNAL_OTA_RETROFIT_DYNAMIC_PARTITIONS_PACKAGE_TARGET): KEY_CERT_PAIR := $(DEFAULT_KEY_CERT_PAIR)
@@ -7127,7 +7128,7 @@ otapackage otardppackage: $(INTERNAL_OTA_RETROFIT_DYNAMIC_PARTITIONS_PACKAGE_TAR
 endif # BOARD_BUILD_RETROFIT_DYNAMIC_PARTITIONS_OTA_PACKAGE
 
 ifneq ($(BOARD_PARTIAL_OTA_UPDATE_PARTITIONS_LIST),)
-name := $(product_name)-partial-ota
+name := CipherOS-W-$(PLATFORM_VERSION)-$(product_name)-partial-ota-$(CUSTOM_BUILD_DATE)-$(TARGET_BUILD_VARIANT)
 
 INTERNAL_OTA_PARTIAL_PACKAGE_TARGET := $(PRODUCT_OUT)/$(name).zip
 $(INTERNAL_OTA_PARTIAL_PACKAGE_TARGET): KEY_CERT_PAIR := $(DEFAULT_KEY_CERT_PAIR)
